@@ -1,86 +1,260 @@
-# Votação
+﻿# Cooperative Voting System
 
-## Objetivo
+## Project Overview
 
-No cooperativismo, cada associado possui um voto e as decisões são tomadas em assembleias, por votação. Imagine que você deve criar uma solução we para gerenciar e participar dessas sessões de votação.
-Essa solução deve ser executada na nuvem e promover as seguintes funcionalidades através de uma API REST / Front:
+This fullstack application implements a voting system for cooperatives, where each associate has one vote and decisions are made through assemblies. The system allows for the creation of agenda items, opening voting sessions, collecting votes, and displaying results.
 
-- Cadastrar uma nova pauta
-- Abrir uma sessão de votação em uma pauta (a sessão de votação deve ficar aberta por
-  um tempo determinado na chamada de abertura ou 1 minuto por default)
-- Receber votos dos associados em pautas (os votos são apenas 'Sim'/'Não'. Cada associado
-  é identificado por um id único e pode votar apenas uma vez por pauta)
-- Contabilizar os votos e dar o resultado da votação na pauta
+### Key Features
 
-Para fins de exercício, a segurança das interfaces pode ser abstraída e qualquer chamada para as interfaces pode ser considerada como autorizada. A solução deve ser construída em java com Spring-boot e Angular/React conforme orientação, mas os frameworks e bibliotecas são de livre escolha (desde que não infrinja direitos de uso).
+- **Agenda Management**: Create and manage voting agenda items
+- **Voting Sessions**: Open sessions with configurable durations (default: 1 minute)
+- **Secure Voting**: Each associate can vote only once per agenda with identity verification
+- **Results Calculation**: Real-time tabulation of votes with visual representation
+- **CPF Validation**: Integration with a validation service to verify voter eligibility
 
-É importante que as pautas e os votos sejam persistidos e que não sejam perdidos com o restart da aplicação.
+## Live Demo
 
-## Como proceder
+The application is running and can be accessed at:
+- Frontend: http://localhost
+- Backend API: http://localhost:8080/api/v1
 
-Por favor, realize o FORK desse repositório e implemente sua solução no FORK em seu repositório GItHub, ao final, notifique da conclusão para que possamos analisar o código implementado.
-
-Lembre de deixar todas as orientações necessárias para executar o seu código.
-
-### Tarefas bônus
-
-- Tarefa Bônus 1 - Integração com sistemas externos
-  - Criar uma Facade/Client Fake que retorna aleátoriamente se um CPF recebido é válido ou não.
-  - Caso o CPF seja inválido, a API retornará o HTTP Status 404 (Not found). Você pode usar geradores de CPF para gerar CPFs válidos
-  - Caso o CPF seja válido, a API retornará se o usuário pode (ABLE_TO_VOTE) ou não pode (UNABLE_TO_VOTE) executar a operação. Essa operação retorna resultados aleatórios, portanto um mesmo CPF pode funcionar em um teste e não funcionar no outro.
+## Directory Structure
 
 ```
-// CPF Ok para votar
-{
-    "status": "ABLE_TO_VOTE
-}
-// CPF Nao Ok para votar - retornar 404 no client tb
-{
-    "status": "UNABLE_TO_VOTE
-}
+cooperative-voting-system/
+├── backend/              # Spring Boot backend application
+│   ├── src/              # Source code
+│   │   ├── main/         # Main application code
+│   │   │   ├── java/     # Java classes
+│   │   │   └── resources/ # Configuration files
+│   │   └── test/         # Test code
+│   └── pom.xml           # Maven configuration
+├── frontend/             # React frontend application
+│   ├── public/           # Static assets
+│   ├── src/              # Source code
+│   │   ├── components/   # React components
+│   │   ├── pages/        # Page components
+│   │   └── services/     # API services
+│   └── package.json      # npm configuration
+├── docker-compose.yml    # Docker composition for the full stack
+└── README.md             # This file
 ```
 
-Exemplos de retorno do serviço
+## Setup Instructions
 
-### Tarefa Bônus 2 - Performance
+### Prerequisites
 
-- Imagine que sua aplicação possa ser usada em cenários que existam centenas de
-  milhares de votos. Ela deve se comportar de maneira performática nesses
-  cenários
-- Testes de performance são uma boa maneira de garantir e observar como sua
-  aplicação se comporta
+- Java 17+
+- Node.js 16+
+- npm 8+
+- Maven 3.6+
+- Docker and Docker Compose (for containerized deployment)
 
-### Tarefa Bônus 3 - Versionamento da API
+### Option 1: Running with Docker (Recommended)
 
-○ Como você versionaria a API da sua aplicação? Que estratégia usar?
+The simplest way to run the entire application is using Docker Compose:
 
-## O que será analisado
+1. Make sure Docker and Docker Compose are installed
 
-- Simplicidade no design da solução (evitar over engineering)
-- Organização do código
-- Arquitetura do projeto
-- Boas práticas de programação (manutenibilidade, legibilidade etc)
-- Possíveis bugs
-- Tratamento de erros e exceções
-- Explicação breve do porquê das escolhas tomadas durante o desenvolvimento da solução
-- Uso de testes automatizados e ferramentas de qualidade
-- Limpeza do código
-- Documentação do código e da API
-- Logs da aplicação
-- Mensagens e organização dos commits
-- Testes
-- Layout responsivo
+2. From the project root, build and start the containers:
+   ```bash
+   docker-compose up --build
+   ```
 
-## Dicas
+3. Access the application:
+   - Frontend: http://localhost
+   - Backend API: http://localhost:8080/api/v1
 
-- Teste bem sua solução, evite bugs
+4. To stop the containers:
+   ```bash
+   docker-compose down
+   ```
 
-  Observações importantes
-- Não inicie o teste sem sanar todas as dúvidas
-- Iremos executar a aplicação para testá-la, cuide com qualquer dependência externa e
-  deixe claro caso haja instruções especiais para execução do mesmo
-  Classificação da informação: Uso Interno
+### Option 2: Running Locally (Development)
 
+#### Backend Setup
 
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
 
-# desafio-votacao
+2. Build the application:
+   ```bash
+   mvn clean install
+   ```
+
+3. Run the application:
+   ```bash
+   mvn spring-boot:run
+   ```
+
+   The API will be available at http://localhost:8080/api/v1
+
+#### Frontend Setup
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm start
+   ```
+
+   The application will be available at http://localhost:3000
+
+## Using the Application
+
+### 1. Home Screen
+
+The home screen provides navigation to the main features:
+- View existing agendas
+- Create new agendas
+
+### 2. Creating an Agenda
+
+1. Click on "Create Agenda" button
+2. Fill in the required fields:
+   - Title: The main topic of the agenda
+   - Description: Detailed information about the agenda
+3. Submit the form to create a new agenda item
+
+### 3. Managing Voting Sessions
+
+From the Agendas page, you can:
+1. View all available agendas
+2. Open a new voting session for an agenda by clicking "Open Voting"
+   - Specify the duration in minutes (default: 1 minute)
+3. Vote on existing sessions by clicking "Vote Now" on agendas with active sessions
+
+### 4. Casting a Vote
+
+The voting process follows a two-step verification for security:
+
+1. **Identity Verification**
+   - Enter your Associate ID (unique identifier)
+   - Enter your CPF number (11 digits)
+   - Click "Validate Identity"
+
+2. **Vote Casting**
+   - After successful validation, vote options appear
+   - Select "Yes" or "No"
+   - Click "Cast Vote" to register your decision
+
+### 5. Viewing Results
+
+Results are displayed after a voting session closes:
+- Visual progress bars show Yes/No vote percentages
+- Total vote count is displayed
+- Final outcome (Approved/Rejected) is shown
+
+## API Endpoints
+
+### Agenda Management
+
+- **Create a new agenda**
+  - `POST /api/v1/agendas`
+  - Request body:
+    ```json
+    {
+      "title": "Annual Budget Approval",
+      "description": "Vote on the cooperative's annual budget for 2025"
+    }
+    ```
+
+- **Get all agendas**
+  - `GET /api/v1/agendas`
+
+- **Get an agenda by ID**
+  - `GET /api/v1/agendas/{id}`
+
+### Voting Session Management
+
+- **Open a new voting session**
+  - `POST /api/v1/sessions`
+  - Request body:
+    ```json
+    {
+      "agendaId": 1,
+      "durationInMinutes": 5
+    }
+    ```
+
+- **Get active voting sessions**
+  - `GET /api/v1/sessions/active`
+
+- **Get voting session results**
+  - `GET /api/v1/sessions/{id}/results`
+
+### Votes
+
+- **Validate voter eligibility**
+  - `GET /api/v1/votes/validate?cpf={cpf}&associateId={associateId}&sessionId={sessionId}`
+
+- **Cast a vote**
+  - `POST /api/v1/votes`
+  - Request body:
+    ```json
+    {
+      "sessionId": 1,
+      "associateId": "123456",
+      "voteOption": true,
+      "cpf": "12345678901"
+    }
+    ```
+
+## Testing
+
+### Valid Test CPFs
+
+For testing, you can use these valid CPF numbers:
+- 529.982.247-25
+- 111.444.777-35
+- 123.456.789-09
+
+Note: The system randomly determines if a CPF holder can vote, so you may need to try different CPFs.
+
+### Special Testing Notes
+
+1. **Voting Session Duration**: Sessions close automatically after the configured duration
+2. **Duplicate Votes**: The system prevents associates from voting more than once per session
+3. **Invalid CPFs**: The system validates CPF numbers mathematically and rejects invalid ones
+4. **Inactive Sessions**: Votes are only accepted during open sessions
+
+## Bonus Features
+
+1. **CPF Validation**: Implements a client that validates CPF numbers and randomly determines voting eligibility
+2. **Performance Optimization**: Includes database connection pooling, caching, and proper indexing for high-volume scenarios
+3. **API Versioning**: Implements URL path versioning (/api/v1/) to support future API evolution
+
+## Troubleshooting
+
+### Common Issues
+
+1. **API Connection Problems**
+   - **Symptom**: Frontend can't connect to backend
+   - **Solution**: Ensure backend is running and CORS is properly configured
+
+2. **Docker Networking Issues**
+   - **Symptom**: Containers can't communicate
+   - **Solution**: Check docker-compose network configuration
+
+3. **Database Connection**
+   - **Symptom**: Backend can't connect to database
+   - **Solution**: Verify database credentials and connection string
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- This project was created as a solution to the DB Server fullstack challenge
+- Based on the requirements specified in [desafio-votacao-fullstack](https://github.com/dbserver/desafio-votacao-fullstack)
