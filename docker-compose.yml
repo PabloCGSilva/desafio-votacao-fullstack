@@ -19,6 +19,9 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/voting_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_DRIVER=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
     depends_on:
       - db
     networks:
