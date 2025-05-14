@@ -1,0 +1,3 @@
+@echo off
+echo Building and starting Voting System...
+docker-compose up --build

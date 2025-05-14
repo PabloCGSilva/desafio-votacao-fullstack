@@ -1,0 +1,3 @@
+com\voting\service\AgendaServiceTest.class
+com\voting\controller\AgendaControllerTest.class
+com\voting\service\VotingSessionServiceTest.class
