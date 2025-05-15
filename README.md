@@ -230,9 +230,9 @@ Note: The system randomly determines if a CPF holder can vote, so you may need t
 
 ## Bonus Features
 
-1. **CPF Validation**: Implements a client that validates CPF numbers and randomly determines voting eligibility
-2. **Performance Optimization**: Includes database connection pooling, caching, and proper indexing for high-volume scenarios
-3. **API Versioning**: Implements URL path versioning (/api/v1/) to support future API evolution
+1. [x] **CPF Validation**: Implements a client that validates CPF numbers and randomly determines voting eligibility
+2. [x] **Performance Optimization**: Includes database connection pooling, caching, and proper indexing for high-volume scenarios
+3. [x] **API Versioning**: Implements URL path versioning (/api/v1/) to support future API evolution
 
 ## Troubleshooting
 
